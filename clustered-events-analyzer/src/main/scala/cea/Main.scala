@@ -11,7 +11,7 @@ case class CEAConfig(input: java.net.URI = new java.net.URI("."),
                      output: java.net.URI = new java.net.URI("."))
 
 /**
-  * spark-submit --class cean.Main --master local[4] \
+  * spark-submit --class cea.Main --master local[4] \
   *        target/scala-2.11/cea.jar \
   *        --input input/clusters.csv --output results
   */
@@ -72,7 +72,7 @@ object Main {
           var radius: Double = inputArr(2).toDouble
           var start: String = inputArr(3)
           var end: String = inputArr(4)
-          var clusterId: Long = inputArr(5).toLong
+          var clusterId: Long = inputArr(7).toLong
           var timeInterval: TimeInterval = (if(end.isEmpty) TimeInterval.apply(start.toLong) else TimeInterval.apply(start.toLong, end.toLong))
           var t: STObject = STObject.apply(wkt, timeInterval, radius, clusterId)
           t
