@@ -16,12 +16,21 @@ case class TimeInterval(
   def start = _start
   def end = _end
 
-  def setStart(start: Long) = _start = start
-  def setEnd(end: Long) = _end = end
+  def setStart(start: Long): TimeInterval = {
+    _start = start
+    this
+  }
+
+  def setEnd(end: Long): TimeInterval = {
+    _end = end
+    this
+  }
 
   override def toString = s"${_start.toString};${_end.toString}"
 }
 
 object TimeInterval {
-  def apply(start: Long): TimeInterval = TimeInterval(start, start)
+  def apply(start: Long): TimeInterval = { 
+    TimeInterval(start, start)
+  }
 }

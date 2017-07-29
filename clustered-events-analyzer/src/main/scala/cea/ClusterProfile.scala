@@ -14,13 +14,15 @@ case class ClusterProfile (
     private var _boundingHull: Geometry,
     private var _points: Array[Coordinate] = Array.empty[Coordinate]) extends java.io.Serializable {
     
-    private def updateMinIntervalIfItGreater(timeInterval: TimeInterval) = 
-        if (_minTimeInterval.length < timeInterval.length) _minTimeInterval = timeInterval
+    private def updateMinIntervalIfItGreater(timeInterval: TimeInterval) = {
+        println(_minTimeInterval.length + (if (_minTimeInterval.length > timeInterval.length) " > " else " < ") + timeInterval.length)
+        if (_minTimeInterval.length > timeInterval.length) _minTimeInterval = timeInterval
+    }
 
     private def updateMaxIntervalIfItSmaller(timeInterval: TimeInterval) = 
-        if (_maxTimeInterval.length > timeInterval.length) _maxTimeInterval = timeInterval
+        if (_maxTimeInterval.length < timeInterval.length) _maxTimeInterval = timeInterval
     
-    private def updateTimeRangeIfItNarrower(timeInterval: TimeInterval): Unit = {
+    private def updateTimeRangeIfItNarrower(timeInterval: TimeInterval) = {
         if (timeInterval.start < _timeRange.start) _timeRange.setStart(timeInterval.start)
         if (timeInterval.end > _timeRange.end) _timeRange.setEnd(timeInterval.end)
     }
@@ -64,6 +66,6 @@ case class ClusterProfile (
 }
 
 object ClusterProfile {
-    def apply(id: Long, objectsCount: Long, timeRange: TimeInterval): ClusterProfile = 
-        ClusterProfile(id, objectsCount, TimeInterval.apply(0), TimeInterval.apply(0, Long.MaxValue), timeRange, null)
+    def apply(id: Long, objectsCount: Long): ClusterProfile = 
+        ClusterProfile(id, objectsCount, TimeInterval.apply(Long.MaxValue).setEnd(0), TimeInterval.apply(0).setEnd(Long.MaxValue), TimeInterval.apply(Long.MaxValue).setEnd(0), null)
 }

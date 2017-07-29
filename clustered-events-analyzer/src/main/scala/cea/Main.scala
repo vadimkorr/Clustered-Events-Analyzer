@@ -20,7 +20,7 @@ object Main {
 
   def processCluster(iter: (Long, Iterable[STObject])): ClusterProfile = {
       val it = iter._2
-      var cp: ClusterProfile = ClusterProfile.apply(it.head.getClusterId, it.size, it.head.getTimeInterval)
+      var cp: ClusterProfile = ClusterProfile.apply(it.head.getClusterId, it.size)
       
       it.foreach((stObj) => {
         cp.updateTimeIntervals(stObj.getTimeInterval)
